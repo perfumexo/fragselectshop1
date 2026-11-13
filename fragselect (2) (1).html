@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FragSelect — Original Designer Fragrances</title>
+<meta name="description" content="Authentic original designer perfumes and colognes. Personal recommendations and real customer care.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--obsidian:#171512;--gold:#C5A46D;--ivory:#F1EBDD;--taupe:#66594A;--panel:#1f1c18;--muted:rgba(241,235,221,.68)}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--obsidian);color:var(--ivory);font:16px/1.6 Inter,system-ui,sans-serif}
+h1,h2,h3,.logo{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;letter-spacing:.02em}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+header{position:sticky;top:0;z-index:20;background:rgba(23,21,18,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--taupe)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-size:1.7rem;color:var(--gold)}
+nav{display:flex;gap:26px;align-items:center;font-size:.92rem}
+nav a:hover{color:var(--gold)}
+.btn{display:inline-block;background:var(--gold);color:var(--obsidian);border:0;padding:12px 26px;font:500 .9rem Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
+.btn:hover{background:var(--ivory)}
+.btn.ghost{background:none;color:var(--gold);border:1px solid var(--gold)}
+.btn.ghost:hover{background:var(--gold);color:var(--obsidian)}
+.hero{padding:110px 0 90px;text-align:center;background:radial-gradient(ellipse at top,#2a251e,var(--obsidian) 70%)}
+.eyebrow{color:var(--gold);font-size:.78rem;letter-spacing:.3em;text-transform:uppercase}
+.hero h1{font-size:clamp(2.6rem,7vw,5rem);line-height:1.05;margin:16px 0 20px}
+.hero p{max-width:540px;margin:0 auto 32px;color:var(--muted)}
+.hero .btn{margin:0 6px 10px}
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--taupe);border-block:1px solid var(--taupe)}
+.trust div{background:var(--obsidian);padding:22px 12px;text-align:center;font-size:.88rem;color:var(--muted)}
+.trust b{display:block;color:var(--gold);font-weight:500;margin-bottom:2px}
+section{padding:84px 0}
+.head{text-align:center;margin-bottom:44px}
+.head h2{font-size:2.5rem;margin-top:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px}
+.card{background:var(--panel);border:1px solid var(--taupe);display:flex;flex-direction:column}
+.shot{aspect-ratio:1;background:#2a251e;display:grid;place-items:center;overflow:hidden}
+.shot img{width:100%;height:100%;object-fit:contain;padding:12px}
+.card .body{padding:18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.brand{color:var(--gold);font-size:.74rem;letter-spacing:.22em;text-transform:uppercase}
+.card h3{font-size:1.4rem}
+.tags{color:var(--muted);font-size:.82rem}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-top:auto;padding-top:10px}
+select,input,textarea{background:var(--obsidian);color:var(--ivory);border:1px solid var(--taupe);padding:10px 12px;font:inherit;width:100%}
+select{width:auto}
+select:focus,input:focus,textarea:focus{outline:1px solid var(--gold)}
+.price{color:var(--gold);font-size:1.1rem}
+.card .btn{width:100%;margin-top:10px;padding:10px}
+.alt{background:var(--panel);border-block:1px solid var(--taupe)}
+.quiz{max-width:720px;margin:0 auto;text-align:center}
+.q h3{font-size:1.7rem;margin-bottom:20px}
+.opts{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.opts button{background:none;color:var(--ivory);border:1px solid var(--taupe);padding:12px 22px;font:inherit;cursor:pointer}
+.opts button:hover{border-color:var(--gold);color:var(--gold)}
+.step{color:var(--muted);font-size:.82rem;margin-bottom:10px}
+.results{margin-top:30px;text-align:left}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+details{border-bottom:1px solid var(--taupe);padding:16px 0}
+summary{cursor:pointer;font-weight:500;list-style:none}
+summary::after{content:"+";float:right;color:var(--gold)}
+details[open] summary::after{content:"–"}
+details p{color:var(--muted);margin-top:10px}
+form{display:grid;gap:12px}
+label{font-size:.82rem;color:var(--muted)}
+footer{border-top:1px solid var(--taupe);padding:40px 0;color:var(--muted);font-size:.85rem;text-align:center}
+#drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:var(--panel);border-left:1px solid var(--taupe);transform:translateX(100%);transition:transform .25s;z-index:40;display:flex;flex-direction:column;padding:24px}
+#drawer.open{transform:none}
+#items{flex:1;overflow:auto;margin:18px 0}
+.line{display:flex;justify-content:space-between;gap:10px;padding:12px 0;border-bottom:1px solid var(--taupe);font-size:.92rem}
+.line small{color:var(--muted);display:block}
+.x{background:none;border:0;color:var(--gold);cursor:pointer;font-size:.8rem}
+.count{background:var(--gold);color:var(--obsidian);border-radius:20px;padding:0 8px;font-size:.78rem;margin-left:4px}
+.bar{position:sticky;top:68px;z-index:15;background:var(--obsidian);border:1px solid var(--taupe);padding:18px;margin-bottom:30px;display:grid;gap:16px}
+.bar .r1{display:flex;gap:12px;flex-wrap:wrap}
+.bar .r1 input{flex:1;min-width:200px}
+.bar .r1 select{min-width:170px}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button{background:none;color:var(--ivory);border:1px solid var(--taupe);padding:9px 22px;font:inherit;font-size:.88rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.seg button.on,.seg button:hover{background:var(--gold);color:var(--obsidian);border-color:var(--gold)}
+.price-r{display:grid;grid-template-columns:auto 1fr 1fr auto;gap:14px;align-items:center;font-size:.85rem;color:var(--muted)}
+.price-r b{color:var(--gold);font-weight:500}
+input[type=range]{padding:0;border:0;accent-color:var(--gold);background:none}
+.meta{display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem;margin-bottom:18px}
+.meta button{background:none;border:0;color:var(--gold);cursor:pointer;font:inherit}
+.none{text-align:center;color:var(--muted);padding:50px 0}
+[hidden]{display:none!important}
+.co{padding:56px 0 90px}
+.co-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:start}
+.co fieldset{border:0;padding:0;display:grid;gap:12px;margin-bottom:34px}
+.co legend{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:1.6rem;margin-bottom:12px;padding:0}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sum{background:var(--panel);border:1px solid var(--taupe);padding:24px;position:sticky;top:92px}
+.sum .line.t{border:0;font-size:1.05rem;padding-top:16px}
+.paybox{border:1px dashed var(--taupe);padding:30px 20px;text-align:center;color:var(--muted);font-size:.9rem}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:.85rem;color:var(--muted)}
+.chk input{width:auto;margin-top:5px;accent-color:var(--gold)}
+.err{color:#e0a38f;font-size:.9rem}
+.secure{color:var(--muted);font-size:.8rem;text-align:center;margin-top:10px}
+.done{max-width:560px;margin:40px auto;text-align:center}
+.ad .box{background:var(--panel);border:1px solid var(--taupe);padding:24px;margin-bottom:24px}
+.ad .box h3{font-size:1.5rem;margin-bottom:12px}
+.ad .tw{overflow-x:auto;border:1px solid var(--taupe);margin-top:14px}
+.ad table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:1150px}
+.ad th{text-align:left;color:var(--gold);font-weight:500;padding:10px 6px;border-bottom:1px solid var(--taupe);white-space:nowrap}
+.ad td{padding:6px;border-bottom:1px solid #2a251e;vertical-align:middle}
+.ad td input,.ad td select{padding:7px 8px;font-size:.82rem;width:100%}
+.ad .thumb{width:38px;height:38px;object-fit:cover;background:#2a251e;display:block}
+.ad .tb{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:20px 0}
+.ad .btn{padding:10px 18px}
+.ad .ok{color:var(--gold);font-size:.9rem}
+.ad code{word-break:break-all;color:var(--gold);font-size:.8rem}
+@media(max-width:860px){.co-grid{grid-template-columns:1fr}.sum{position:static;order:-1}}
+@media(max-width:760px){.price-r{grid-template-columns:1fr 1fr}.price-r span{grid-column:span 2}.bar{top:68px}nav a.hide{display:none}.two{grid-template-columns:1fr;gap:36px}section{padding:60px 0}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="#top">FragSelect</a>
+  <nav><a class="hide" href="#shop">Shop</a><a class="hide" href="#recommend">Recommendations</a><a class="hide" href="#care">Customer Care</a>
+  <a href="#" id="open">Bag<span class="count" id="n">0</span></a></nav>
+</div></header>
+
+<main id="top">
+<div class="hero"><div class="wrap">
+  <div class="eyebrow">Original designer fragrances</div>
+  <h1>Find the scent<br>that is <em style="color:var(--gold)">yours</em></h1>
+  <p>Authentic perfumes and colognes, shipped across Europe with tracked delivery.</p>
+  <a class="btn" href="#shop">Shop fragrances</a><a class="btn ghost" href="#recommend">Help me choose</a>
+</div></div>
+
+<div class="trust">
+  <div><b>Tracked EU delivery</b>Straight to your door</div>
+  <div><b>Secure checkout</b>Encrypted payments</div>
+  <div><b>Real support</b>Replies within 24 hours</div>
+</div>
+
+<section id="shop"><div class="wrap">
+  <div class="head"><div class="eyebrow">The collection</div><h2>Our fragrances</h2></div>
+  <div class="bar">
+    <div class="seg" id="seg"></div>
+    <div class="r1">
+      <input id="q" type="search" placeholder="Search fragrances or brands…" aria-label="Search fragrances">
+      <select id="brand" aria-label="Filter by brand"></select>
+    </div>
+    <div class="price-r">
+      <span>Price: <b id="pv"></b></span>
+      <input id="pmin" type="range" aria-label="Minimum price"><input id="pmax" type="range" aria-label="Maximum price">
+      <span></span>
+    </div>
+  </div>
+  <div class="meta"><span id="cnt"></span><button id="reset">Clear filters</button></div>
+  <div class="grid" id="grid"></div>
+</div></section>
+
+<section id="recommend" class="alt"><div class="wrap quiz">
+  <div class="eyebrow">Personal recommendations</div>
+  <h2 style="font-size:2.5rem;margin:8px 0 34px">Not sure where to start?</h2>
+  <div id="quiz"></div>
+</div></section>
+
+<section id="care"><div class="wrap">
+  <div class="head"><div class="eyebrow">Customer service</div><h2>We’re here to help</h2></div>
+  <div class="two">
+    <div>
+      <h3 style="font-size:1.8rem;margin-bottom:8px">Common questions</h3>
+      <details><summary>Are the fragrances original?</summary><p>Yes. Every bottle is a genuine, brand-original product, sealed and sourced from authorised channels.</p></details>
+      <details><summary>How long does delivery take?</summary><p>Orders are dispatched quickly and sent with tracking to EU destinations. You’ll receive a tracking link by email as soon as your parcel ships.</p></details>
+      <details><summary>What is your return policy?</summary><p>Unopened, sealed items can be returned. For hygiene reasons, opened fragrances can’t be returned unless they arrive damaged or incorrect. Contact us and we’ll sort it out.</p></details>
+      <details><summary>Can I get help choosing a gift?</summary><p>Of course. Use the recommendation guide above or send us a message with the occasion and budget.</p></details>
+    </div>
+    <div>
+      <h3 style="font-size:1.8rem;margin-bottom:8px">Contact us</h3>
+      <form id="contact">
+        <div><label for="cn">Name</label><input id="cn" required></div>
+        <div><label for="ce">Email</label><input id="ce" type="email" required></div>
+        <div><label for="cm">How can we help?</label><textarea id="cm" rows="5" required></textarea></div>
+        <button class="btn" type="submit">Send message</button>
+      </form>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<section id="checkout-page" class="co" hidden><div class="wrap">
+  <a href="#shop" style="color:var(--gold);font-size:.9rem">← Continue shopping</a>
+  <h2 style="font-size:2.6rem;margin:10px 0 30px">Checkout</h2>
+  <div id="co-empty" class="none" hidden>Your bag is empty. <a href="#shop" style="color:var(--gold)">Browse fragrances</a></div>
+  <div id="co-done" class="done" hidden>
+    <h2 style="font-size:2.4rem;color:var(--gold)">Thank you for your order</h2>
+    <p style="color:var(--muted);margin:14px 0 26px">Order <b id="ref"></b> is confirmed. A confirmation email is on its way, and you’ll get a tracking link as soon as it ships.</p>
+    <a class="btn" href="#shop">Keep shopping</a>
+  </div>
+  <form id="co-form" class="co-grid" hidden>
+    <div>
+      <fieldset><legend>Contact</legend>
+        <input name="email" type="email" placeholder="Email address" autocomplete="email" required aria-label="Email address">
+        <input name="phone" type="tel" placeholder="Phone (for the courier)" autocomplete="tel" required aria-label="Phone">
+      </fieldset>
+      <fieldset><legend>Delivery address</legend>
+        <div class="f2"><input name="first" placeholder="First name" autocomplete="given-name" required aria-label="First name"><input name="last" placeholder="Last name" autocomplete="family-name" required aria-label="Last name"></div>
+        <input name="address" placeholder="Street address and number" autocomplete="street-address" required aria-label="Street address">
+        <input name="address2" placeholder="Apartment, floor, etc. (optional)" aria-label="Address line 2">
+        <div class="f2"><input name="postal" placeholder="Postal code" autocomplete="postal-code" required aria-label="Postal code"><input name="city" placeholder="City" autocomplete="address-level2" required aria-label="City"></div>
+        <select name="country" id="country" style="width:100%" autocomplete="country-name" required aria-label="Country"></select>
+      </fieldset>
+      <fieldset><legend>Payment</legend>
+        <div class="paybox" id="payment-element">Secure card payment form appears here.<br><small>(Connect your payment provider, e.g. Stripe, in the <code>startPayment</code> function.)</small></div>
+        <label class="chk"><input type="checkbox" name="terms" required> <span>I agree to the Terms of Sale and Returns Policy.</span></label>
+        <div class="err" id="co-err" role="alert"></div>
+        <button class="btn" id="pay" type="submit">Pay now</button>
+        <div class="secure">🔒 Encrypted, secure checkout</div>
+      </fieldset>
+    </div>
+    <aside class="sum">
+      <h3 style="font-size:1.6rem">Order summary</h3>
+      <div id="co-items" style="margin:10px 0"></div>
+      <div class="line"><span>Subtotal</span><span id="co-sub"></span></div>
+      <div class="line"><span>Delivery</span><span id="co-ship"></span></div>
+      <div class="line t"><b>Total</b><b class="price" id="co-total"></b></div>
+    </aside>
+  </form>
+</div></section>
+
+<section id="admin-page" class="co ad" hidden><div class="wrap">
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+    <h2 style="font-size:2.6rem">Admin</h2>
+    <div><a href="#shop" style="color:var(--gold);font-size:.9rem">← View shop</a><button class="x" id="ad-out" hidden style="margin-left:18px;font-size:.9rem">Log out</button></div>
+  </div>
+
+  <form id="ad-login" class="box" style="max-width:420px;margin-top:20px">
+    <label for="ad-pw">Admin password</label>
+    <input id="ad-pw" type="password" autocomplete="current-password" required>
+    <div class="err" id="ad-err" role="alert"></div>
+    <button class="btn" type="submit">Log in</button>
+  </form>
+
+  <div id="ad-panel" hidden>
+    <div class="box" style="margin-top:20px">
+      <h3>Delivery</h3>
+      <div class="f2">
+        <div><label for="ad-flat">Delivery cost (€)</label><input id="ad-flat" type="number" min="0" step="0.01"></div>
+        <div><label for="ad-free">Free delivery from (€)</label><input id="ad-free" type="number" min="0" step="1"></div>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>Products</h3>
+      <div class="tb" style="margin:0">
+        <input id="ad-q" type="search" placeholder="Filter by name or brand…" aria-label="Filter products" style="max-width:320px">
+        <button class="btn ghost" id="ad-add" type="button">+ Add product</button>
+      </div>
+      <div class="tw"><table>
+        <thead><tr><th></th><th>Brand</th><th>Name</th><th>Gender</th><th>Family</th><th>Occasion</th><th>Strength</th><th>Price (€)</th><th>Image URL</th><th></th></tr></thead>
+        <tbody id="ad-rows"></tbody>
+      </table></div>
+    </div>
+
+    <div class="tb">
+      <button class="btn" id="ad-save" type="button">Save changes</button>
+      <button class="btn ghost" id="ad-exp" type="button">Export JSON</button>
+      <label class="btn ghost" style="cursor:pointer">Import JSON<input id="ad-imp" type="file" accept=".json,application/json" hidden></label>
+      <button class="btn ghost" id="ad-copy" type="button">Copy code for the file</button>
+      <button class="x" id="ad-reset" type="button" style="font-size:.9rem">Reset to file defaults</button>
+    </div>
+    <div id="ad-msg" role="status"></div>
+    <textarea id="ad-code" rows="8" hidden style="margin-top:12px;font-size:.8rem"></textarea>
+
+    <div class="box" style="margin-top:30px">
+      <h3>Change admin password</h3>
+      <p style="color:var(--muted);font-size:.88rem;margin-bottom:12px">Type a new password, press Generate, then paste the result as the value of <code>ADMIN_HASH</code> in the HTML file.</p>
+      <div class="tb" style="margin:0"><input id="ad-newpw" type="text" placeholder="New password (8+ characters)" style="max-width:320px"><button class="btn ghost" id="ad-hash" type="button">Generate</button></div>
+      <p style="margin-top:12px"><code id="ad-hashout"></code></p>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">© <span id="y"></span> FragSelect · fragselect.shop · Shipping · Returns · Privacy · Terms</div></footer>
+
+<aside id="drawer" aria-label="Shopping bag">
+  <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="font-size:1.6rem">Your bag</h3><button class="x" id="close">Close ✕</button></div>
+  <div id="items"></div>
+  <div class="line" style="border:0"><b>Total</b><b class="price" id="total">€0.00</b></div>
+  <button class="btn" id="checkout">Checkout</button>
+</aside>
+
+<script>
+/* ===== EDIT THIS LIST: real names, images and prices =====
+   img: full image URL (leave "" to show a placeholder bottle)
+   gender: men | women | unisex   family: fresh | woody | sweet | floral   occasion: daily | evening | office   strength: light | moderate | bold
+   price = price in EUR */
+var PRODUCTS=[
+ {id:1,brand:"Rabanne",name:"1 Million Parfum",gender:"men",family:"woody",occasion:"evening",strength:"bold",price:29.95,img:"img/rabanne-1-million-parfum.png"},
+ {id:2,brand:"By Kilian",name:"Angels' Share",gender:"unisex",family:"sweet",occasion:"evening",strength:"bold",price:36.95,img:"img/by-kilian-angels-share.png"},
+ {id:3,brand:"Initio Parfums Privés",name:"Side Effect",gender:"unisex",family:"sweet",occasion:"evening",strength:"bold",price:35.95,img:"img/initio-parfums-priv-s-side-effect.png"},
+ {id:4,brand:"Montale",name:"Arabians Tonka",gender:"unisex",family:"woody",occasion:"evening",strength:"bold",price:31.49,img:"img/montale-arabians-tonka.png"},
+ {id:5,brand:"Valentino",name:"Uomo Born in Roma Purple Melancholia",gender:"men",family:"woody",occasion:"evening",strength:"moderate",price:26.95,img:"img/valentino-uomo-born-in-roma-purple-melancholia.png"},
+ {id:6,brand:"Giorgio Armani",name:"Stronger With You Freeze",gender:"men",family:"fresh",occasion:"daily",strength:"light",price:27.95,img:"img/giorgio-armani-stronger-with-you-freeze.png"},
+ {id:7,brand:"Giorgio Armani",name:"Stronger With You Only",gender:"men",family:"woody",occasion:"daily",strength:"moderate",price:27.95,img:"img/giorgio-armani-stronger-with-you-only.png"},
+ {id:8,brand:"Giorgio Armani",name:"Stronger With You Powerfully",gender:"men",family:"sweet",occasion:"evening",strength:"bold",price:28.95,img:"img/giorgio-armani-stronger-with-you-powerfully.png"},
+ {id:9,brand:"Giorgio Armani",name:"Stronger With You Absolutely",gender:"men",family:"woody",occasion:"evening",strength:"bold",price:28.95,img:"img/giorgio-armani-stronger-with-you-absolutely.png"},
+ {id:10,brand:"Giorgio Armani",name:"Stronger With You Intensely",gender:"men",family:"woody",occasion:"evening",strength:"bold",price:25.95,img:"img/giorgio-armani-stronger-with-you-intensely.png"},
+ {id:11,brand:"Jean Paul Gaultier",name:"Le Male Elixir",gender:"men",family:"sweet",occasion:"evening",strength:"bold",price:35.95,img:"img/jean-paul-gaultier-le-male-elixir.png"},
+ {id:12,brand:"Valentino",name:"Uomo Born in Roma Green Stravaganza",gender:"men",family:"fresh",occasion:"daily",strength:"moderate",price:26.95,img:"img/valentino-uomo-born-in-roma-green-stravaganza.png"},
+ {id:13,brand:"Louis Vuitton",name:"Pacific Chill",gender:"unisex",family:"fresh",occasion:"daily",strength:"light",price:27.95,img:"img/louis-vuitton-pacific-chill.png"},
+ {id:14,brand:"Louis Vuitton",name:"Ombre Nomade",gender:"unisex",family:"woody",occasion:"evening",strength:"bold",price:30.95,img:"img/louis-vuitton-ombre-nomade.png"},
+ {id:15,brand:"Louis Vuitton",name:"Meteore",gender:"unisex",family:"fresh",occasion:"office",strength:"moderate",price:30.95,img:"img/louis-vuitton-meteore.png"},
+ {id:16,brand:"Louis Vuitton",name:"Imagination",gender:"unisex",family:"fresh",occasion:"office",strength:"light",price:30.95,img:"img/louis-vuitton-imagination.png"},
+ {id:17,brand:"Christian Dior",name:"Lucky",gender:"unisex",family:"floral",occasion:"daily",strength:"moderate",price:31.49,img:"img/christian-dior-lucky.png"},
+ {id:18,brand:"Christian Dior",name:"Diorivera",gender:"unisex",family:"fresh",occasion:"daily",strength:"light",price:31.68,img:"img/christian-dior-diorivera.png"},
+ {id:19,brand:"Christian Dior",name:"Spice Blend",gender:"unisex",family:"woody",occasion:"evening",strength:"moderate",price:31.48,img:"img/christian-dior-spice-blend.png"},
+ {id:20,brand:"Valentino",name:"Uomo Born in Roma Coral Fantasy",gender:"men",family:"fresh",occasion:"daily",strength:"moderate",price:26.95,img:"img/valentino-uomo-born-in-roma-coral-fantasy.png"},
+ {id:21,brand:"Valentino",name:"Uomo Born in Roma Intense",gender:"men",family:"woody",occasion:"evening",strength:"bold",price:26.95,img:"img/valentino-uomo-born-in-roma-intense.png"},
+ {id:22,brand:"Valentino",name:"Uomo Intense",gender:"men",family:"woody",occasion:"evening",strength:"bold",price:26.95,img:"img/valentino-uomo-intense.png"},
+ {id:23,brand:"Valentino",name:"Uomo Born in Roma Yellow Dream",gender:"men",family:"fresh",occasion:"daily",strength:"light",price:26.95,img:"img/valentino-uomo-born-in-roma-yellow-dream.png"},
+ {id:24,brand:"Yves Saint Laurent",name:"Y",gender:"men",family:"fresh",occasion:"office",strength:"moderate",price:31.95,img:"img/yves-saint-laurent-y.png"},
+ {id:25,brand:"Dolce & Gabbana",name:"The One",gender:"men",family:"woody",occasion:"evening",strength:"moderate",price:28.95,img:"img/dolce-gabbana-the-one.png"},
+ {id:26,brand:"Versace",name:"Eros",gender:"men",family:"fresh",occasion:"daily",strength:"moderate",price:28.95,img:"img/versace-eros.png"},
+ {id:27,brand:"Versace",name:"Eros Energy",gender:"men",family:"fresh",occasion:"daily",strength:"moderate",price:28.95,img:"img/versace-eros-energy.png"},
+ {id:28,brand:"Versace",name:"Eros Flame",gender:"men",family:"woody",occasion:"evening",strength:"bold",price:28.95,img:"img/versace-eros-flame.png"},
+ {id:29,brand:"Xerjoff",name:"Alexandria II Anniversary",gender:"unisex",family:"woody",occasion:"evening",strength:"bold",price:28.95,img:"img/xerjoff-alexandria-ii-anniversary.png"},
+ {id:30,brand:"Xerjoff",name:"Erba Pura",gender:"unisex",family:"sweet",occasion:"daily",strength:"moderate",price:28.95,img:"img/xerjoff-erba-pura.png"},
+ {id:31,brand:"Xerjoff",name:"Naxos",gender:"unisex",family:"sweet",occasion:"evening",strength:"bold",price:28.95,img:"img/xerjoff-naxos.png"},
+ {id:32,brand:"Xerjoff",name:"Opera",gender:"unisex",family:"floral",occasion:"evening",strength:"bold",price:28.95,img:"img/xerjoff-opera.png"},
+ {id:33,brand:"Xerjoff",name:"Vibe Accento",gender:"unisex",family:"woody",occasion:"evening",strength:"moderate",price:28.95,img:"img/xerjoff-vibe-accento.png"},
+ {id:34,brand:"Xerjoff",name:"Vibe Muse",gender:"unisex",family:"floral",occasion:"evening",strength:"moderate",price:28.95,img:"img/xerjoff-vibe-muse.png"},
+ {id:35,brand:"Tom Ford",name:"Tobacco Vanille",gender:"unisex",family:"sweet",occasion:"evening",strength:"bold",price:27.95,img:"img/tom-ford-tobacco-vanille.png"},
+ {id:36,brand:"Tom Ford",name:"Lost Cherry",gender:"unisex",family:"sweet",occasion:"evening",strength:"bold",price:27.95,img:"img/tom-ford-lost-cherry.png"},
+ {id:37,brand:"Tom Ford",name:"Bitter Peach",gender:"unisex",family:"sweet",occasion:"evening",strength:"bold",price:27.95,img:"img/tom-ford-bitter-peach.png"},
+ {id:38,brand:"Tom Ford",name:"Neroli Portofino",gender:"unisex",family:"fresh",occasion:"daily",strength:"light",price:27.95,img:"img/tom-ford-neroli-portofino.png"},
+ {id:39,brand:"Tom Ford",name:"Tuscan Leather",gender:"unisex",family:"woody",occasion:"evening",strength:"bold",price:27.95,img:"img/tom-ford-tuscan-leather.png"},
+ {id:40,brand:"Tom Ford",name:"Vanille Fatale",gender:"unisex",family:"sweet",occasion:"evening",strength:"bold",price:27.95,img:"img/tom-ford-vanille-fatale.png"},
+ {id:41,brand:"Tom Ford",name:"F***ing Fabulous",gender:"unisex",family:"woody",occasion:"evening",strength:"bold",price:27.95,img:"img/tom-ford-fing-fabulous.png"},
+ {id:42,brand:"Jean Paul Gaultier",name:"Le Beau Paradise Garden",gender:"men",family:"fresh",occasion:"daily",strength:"moderate",price:28.95,img:"img/jean-paul-gaultier-le-beau-paradise-garden.png"},
+ {id:43,brand:"Parfums de Marly",name:"Althair",gender:"men",family:"sweet",occasion:"evening",strength:"bold",price:27.95,img:"img/parfums-de-marly-althair.png"},
+ {id:44,brand:"Parfums de Marly",name:"Layton",gender:"men",family:"woody",occasion:"evening",strength:"moderate",price:27.95,img:"img/parfums-de-marly-layton.png"},
+ {id:45,brand:"Parfums de Marly",name:"Greenley",gender:"men",family:"fresh",occasion:"daily",strength:"moderate",price:27.95,img:"img/parfums-de-marly-greenley.png"},
+ {id:46,brand:"Parfums de Marly",name:"Herod",gender:"men",family:"woody",occasion:"evening",strength:"moderate",price:27.95,img:"img/parfums-de-marly-herod.png"},
+ {id:47,brand:"Christian Dior",name:"Homme Intense",gender:"men",family:"woody",occasion:"office",strength:"moderate",price:26.95,img:"img/christian-dior-homme-intense.png"},
+ {id:48,brand:"Christian Dior",name:"Sauvage Elixir",gender:"men",family:"woody",occasion:"evening",strength:"bold",price:26.95,img:"img/christian-dior-sauvage-elixir.png"},
+ {id:49,brand:"Christian Dior",name:"Sauvage",gender:"men",family:"fresh",occasion:"daily",strength:"moderate",price:27.95,img:"img/christian-dior-sauvage.png"},
+ {id:50,brand:"Chanel",name:"Bleu de Chanel",gender:"men",family:"woody",occasion:"office",strength:"moderate",price:27.95,img:"img/chanel-bleu-de-chanel.png"},
+ {id:51,brand:"Creed",name:"Aventus",gender:"men",family:"fresh",occasion:"office",strength:"bold",price:30.95,img:"img/creed-aventus.png"},
+ {id:52,brand:"Carolina Herrera",name:"Good Girl",gender:"women",family:"sweet",occasion:"evening",strength:"bold",price:26.95,img:"img/carolina-herrera-good-girl.png"},
+ {id:53,brand:"Carolina Herrera",name:"Good Girl Supreme",gender:"women",family:"sweet",occasion:"evening",strength:"bold",price:27.95,img:"img/carolina-herrera-good-girl-supreme.png"},
+ {id:54,brand:"Carolina Herrera",name:"Good Girl Blush",gender:"women",family:"floral",occasion:"daily",strength:"moderate",price:26.95,img:"img/carolina-herrera-good-girl-blush.png"},
+ {id:55,brand:"Carolina Herrera",name:"Good Girl Sparkling Ice",gender:"women",family:"floral",occasion:"daily",strength:"light",price:26.95,img:"img/carolina-herrera-good-girl-sparkling-ice.png"},
+ {id:56,brand:"Carolina Herrera",name:"Very Good Girl Glam",gender:"women",family:"sweet",occasion:"evening",strength:"moderate",price:30.95,img:"img/carolina-herrera-very-good-girl-glam.png"},
+ {id:57,brand:"Carolina Herrera",name:"Good Girl Dazzling",gender:"women",family:"floral",occasion:"evening",strength:"moderate",price:26.95,img:"img/carolina-herrera-good-girl-dazzling.png"},
+ {id:58,brand:"Yves Saint Laurent",name:"Opium",gender:"women",family:"sweet",occasion:"evening",strength:"bold",price:27.95,img:"img/yves-saint-laurent-opium.png"},
+ {id:59,brand:"Yves Saint Laurent",name:"Black Opium",gender:"women",family:"sweet",occasion:"evening",strength:"bold",price:27.95,img:"img/yves-saint-laurent-black-opium.png"},
+ {id:60,brand:"Christian Dior",name:"J'adore",gender:"women",family:"floral",occasion:"office",strength:"moderate",price:26.95,img:"img/christian-dior-j-adore.png"},
+ {id:61,brand:"Christian Dior",name:"Miss Dior Parfum",gender:"women",family:"floral",occasion:"daily",strength:"moderate",price:27.95,img:"img/christian-dior-miss-dior-parfum.png"},
+ {id:62,brand:"Christian Dior",name:"Hypnotic Poison",gender:"women",family:"sweet",occasion:"evening",strength:"bold",price:26.95,img:"img/christian-dior-hypnotic-poison.png"},
+ {id:63,brand:"Christian Dior",name:"Addict Eau de Parfum",gender:"women",family:"sweet",occasion:"evening",strength:"bold",price:27.95,img:"img/christian-dior-addict-eau-de-parfum.png"},
+ {id:64,brand:"Christian Dior",name:"Addict Eau Fraîche",gender:"women",family:"floral",occasion:"daily",strength:"light",price:26.95,img:"img/christian-dior-addict-eau-fra-che.png"},
+ {id:65,brand:"Christian Dior",name:"Addict Rosy Glow",gender:"women",family:"floral",occasion:"daily",strength:"light",price:26.95,img:"img/christian-dior-addict-rosy-glow.png"},
+ {id:66,brand:"Christian Dior",name:"Addict Peachy Glow",gender:"women",family:"sweet",occasion:"daily",strength:"light",price:26.95,img:"img/christian-dior-addict-peachy-glow.png"},
+ {id:67,brand:"Christian Dior",name:"Addict Purple Glow",gender:"women",family:"floral",occasion:"daily",strength:"moderate",price:26.95,img:"img/christian-dior-addict-purple-glow.png"},
+ {id:68,brand:"Valentino",name:"Born in Roma Donna",gender:"women",family:"floral",occasion:"daily",strength:"moderate",price:26.95,img:"img/valentino-born-in-roma-donna.png"},
+ {id:69,brand:"Valentino",name:"Born in Roma Ivory Rendez-Vous Donna",gender:"women",family:"sweet",occasion:"daily",strength:"light",price:26.95,img:"img/valentino-born-in-roma-ivory-rendez-vous-donna.png"},
+ {id:70,brand:"Valentino",name:"Born in Roma Green Stravaganza Donna",gender:"women",family:"fresh",occasion:"daily",strength:"light",price:26.95,img:"img/valentino-born-in-roma-green-stravaganza-donna.png"},
+ {id:71,brand:"Valentino",name:"Born in Roma Yellow Dream Donna",gender:"women",family:"floral",occasion:"daily",strength:"light",price:26.95,img:"img/valentino-born-in-roma-yellow-dream-donna.png"},
+ {id:72,brand:"Valentino",name:"Born in Roma Coral Fantasy Donna",gender:"women",family:"sweet",occasion:"daily",strength:"moderate",price:26.95,img:"img/valentino-born-in-roma-coral-fantasy-donna.png"},
+ {id:73,brand:"Valentino",name:"Born in Roma The Gold Donna",gender:"women",family:"floral",occasion:"evening",strength:"moderate",price:26.95,img:"img/valentino-born-in-roma-the-gold-donna.png"},
+ {id:74,brand:"Valentino",name:"Born in Roma Donna Intense",gender:"women",family:"sweet",occasion:"evening",strength:"bold",price:26.95,img:"img/valentino-born-in-roma-donna-intense.png"},
+ {id:75,brand:"Le Sablier",name:"Zeus",gender:"unisex",family:"woody",occasion:"evening",strength:"bold",price:47.95,img:"img/le-sablier-zeus.png"},
+ {id:76,brand:"Le Sablier",name:"Pharaon",gender:"unisex",family:"woody",occasion:"evening",strength:"bold",price:48.95,img:"img/le-sablier-pharaon.png"},
+ {id:77,brand:"Maison Francis Kurkdjian",name:"Grand Soir",gender:"unisex",family:"sweet",occasion:"evening",strength:"bold",price:28.95,img:"img/maison-francis-kurkdjian-grand-soir.png"}
+];
+/* Products saved from the Admin panel (this browser) override the list above */
+try{var _ls=JSON.parse(localStorage.getItem("fs_products")||"null");if(Array.isArray(_ls)&&_ls.length)PRODUCTS=_ls}catch(e){}
+var cart=[],$=function(s){return document.querySelector(s)};
+var eur=function(v){return "€"+v.toFixed(2)};
+
+function bottle(){return '<svg width="90" viewBox="0 0 60 100" fill="none" stroke="#C5A46D" stroke-width="1.5"><rect x="22" y="4" width="16" height="14"/><rect x="26" y="18" width="8" height="8"/><rect x="8" y="26" width="44" height="68" rx="4"/><rect x="16" y="46" width="28" height="20" stroke="#66594A"/></svg>'}
+function card(p){
+  var shot=p.img?'<img src="'+p.img+'" alt="'+p.name+'" loading="lazy" onerror="this.parentNode.innerHTML=bottle()">':bottle();
+  return '<article class="card"><div class="shot">'+shot+'</div><div class="body"><div class="brand">'+p.brand+'</div><h3>'+p.name+'</h3><div class="tags">'+p.gender+' · '+p.family+' · '+p.occasion+' · '+p.strength+'</div>'+
+  '<div class="row"><span class="price">'+eur(p.price)+'</span></div>'+
+  '<button class="btn" onclick="add('+p.id+')">Add to bag</button></div></article>'}
+function add(id){var p=PRODUCTS.find(function(x){return x.id==id}),k=String(id),f=cart.find(function(c){return c.k==k});
+  if(f)f.q++;else cart.push({k:k,name:p.name,price:p.price,q:1});draw();$("#drawer").classList.add("open")}
+function rm(k){cart=cart.filter(function(c){return c.k!=k});draw()}
+function draw(){var t=0,n=0;$("#items").innerHTML=cart.length?cart.map(function(c){t+=c.price*c.q;n+=c.q;
+  return '<div class="line"><div>'+c.name+'<small>Qty '+c.q+'</small><button class="x" onclick="rm(\''+c.k+'\')">Remove</button></div><div class="price">'+eur(c.price*c.q)+'</div></div>'}).join(""):'<p style="color:var(--muted)">Your bag is empty.</p>';
+  $("#total").textContent=eur(t);$("#n").textContent=n;try{sessionStorage.setItem("fs_cart",JSON.stringify(cart))}catch(e){}}
+/* ===== Segments, search, brand and price filters ===== */
+var F={seg:"all",q:"",brand:"all"},
+ lo=Math.floor(Math.min.apply(0,PRODUCTS.map(function(p){return p.price}))),
+ hi=Math.ceil(Math.max.apply(0,PRODUCTS.map(function(p){return p.price})));
+F.min=lo;F.max=hi;
+var SEGS=[["all","All"],["men","Men"],["women","Women"],["unisex","Unisex"]];
+$("#seg").innerHTML=SEGS.map(function(g){return '<button data-g="'+g[0]+'">'+g[1]+'</button>'}).join("");
+var brands=PRODUCTS.map(function(p){return p.brand}).filter(function(b,i,a){return a.indexOf(b)==i}).sort();
+$("#brand").innerHTML='<option value="all">All brands</option>'+brands.map(function(b){return '<option>'+b+'</option>'}).join("");
+["#pmin","#pmax"].forEach(function(id){var e=$(id);e.min=lo;e.max=hi;e.step=1});
+function show(){
+  var q=F.q.trim().toLowerCase();
+  var list=PRODUCTS.filter(function(p){
+    return (F.seg=="all"||p.gender==F.seg)&&(F.brand=="all"||p.brand==F.brand)&&p.price>=F.min&&p.price<=F.max&&
+      (!q||(p.name+" "+p.brand+" "+p.family).toLowerCase().indexOf(q)>-1)});
+  $("#grid").innerHTML=list.length?list.map(card).join(""):'<p class="none" style="grid-column:1/-1">No fragrances match your filters.</p>';
+  $("#cnt").textContent=list.length+" fragrance"+(list.length==1?"":"s");
+  $("#pv").textContent="€"+F.min+" – €"+F.max;
+  $("#pmin").value=F.min;$("#pmax").value=F.max;$("#q").value=F.q;$("#brand").value=F.brand;
+  document.querySelectorAll("#seg button").forEach(function(b){b.classList.toggle("on",b.dataset.g==F.seg)})}
+$("#seg").onclick=function(e){if(e.target.dataset.g){F.seg=e.target.dataset.g;show()}};
+$("#q").oninput=function(){F.q=this.value;var v=this.value;show();$("#q").focus()};
+$("#brand").onchange=function(){F.brand=this.value;show()};
+$("#pmin").oninput=function(){F.min=Math.min(+this.value,F.max);show()};
+$("#pmax").oninput=function(){F.max=Math.max(+this.value,F.min);show()};
+$("#reset").onclick=function(){F={seg:"all",q:"",brand:"all",min:lo,max:hi};show()};
+show();
+$("#open").onclick=function(e){e.preventDefault();$("#drawer").classList.add("open")};
+$("#close").onclick=function(){$("#drawer").classList.remove("open")};
+$("#checkout").onclick=function(){$("#drawer").classList.remove("open");location.hash="#checkout"};
+$("#y").textContent=new Date().getFullYear();
+
+/* ===== Recommendation guide ===== */
+var QS=[
+ {k:"family",t:"What kind of scent do you love?",o:[["fresh","Fresh & clean"],["woody","Warm & woody"],["sweet","Sweet & gourmand"],["floral","Floral & elegant"]]},
+ {k:"occasion",t:"When will you wear it most?",o:[["daily","Every day"],["evening","Evenings & dates"],["office","Work & office"]]},
+ {k:"strength",t:"How noticeable should it be?",o:[["light","Soft & subtle"],["moderate","Balanced"],["bold","Bold & lasting"]]}
+],ans={},qi=0;
+function ask(){var q=QS[qi];
+  $("#quiz").innerHTML='<div class="q"><div class="step">Question '+(qi+1)+' of '+QS.length+'</div><h3>'+q.t+'</h3><div class="opts">'+
+  q.o.map(function(o){return '<button onclick="pick(\''+o[0]+'\')">'+o[1]+'</button>'}).join("")+'</div></div>'}
+function pick(v){ans[QS[qi].k]=v;qi++;qi<QS.length?ask():done()}
+function done(){
+  var r=PRODUCTS.map(function(p){var s=0;QS.forEach(function(q){if(p[q.k]==ans[q.k])s+=(q.k=="family"?2:1)});return{p:p,s:s}}).sort(function(a,b){return b.s-a.s}).slice(0,3);
+  $("#quiz").innerHTML='<h3 style="font-size:1.8rem;margin-bottom:6px">Your top picks</h3><p style="color:var(--muted)">Matched to your taste.</p><div class="results grid">'+r.map(function(x){return card(x.p)}).join("")+'</div><p style="margin-top:24px"><button class="btn ghost" onclick="qi=0;ans={};ask()">Start again</button></p>'}
+ask();
+
+$("#contact").onsubmit=function(e){e.preventDefault();
+  location.href="mailto:support@fragselect.shop?subject="+encodeURIComponent("Customer enquiry from "+$("#cn").value)+"&body="+encodeURIComponent($("#cm").value+"\n\n"+$("#cn").value+" ("+$("#ce").value+")")};
+
+/* ===== Checkout ===== */
+var SHIP={flat:4.9,freeOver:100}; /* EDIT: delivery cost and free-delivery threshold (EUR) */
+try{var _sh=JSON.parse(localStorage.getItem("fs_ship")||"null");if(_sh&&isFinite(_sh.flat)&&isFinite(_sh.freeOver)){SHIP.flat=+_sh.flat;SHIP.freeOver=+_sh.freeOver}}catch(e){}
+var COUNTRIES=["Austria","Belgium","Bulgaria","Croatia","Cyprus","Czechia","Denmark","Estonia","Finland","France","Germany","Greece","Hungary","Ireland","Italy","Latvia","Lithuania","Luxembourg","Malta","Netherlands","Poland","Portugal","Romania","Serbia","Slovakia","Slovenia","Spain","Sweden"];
+$("#country").innerHTML='<option value="">Country</option>'+COUNTRIES.map(function(c){return '<option>'+c+'</option>'}).join("");
+var coDone=false;
+function sub(){return cart.reduce(function(a,c){return a+c.price*c.q},0)}
+function ship(){var t=sub();return t===0||t>=SHIP.freeOver?0:SHIP.flat}
+function renderCO(){
+  var empty=!cart.length;
+  $("#co-done").hidden=!coDone;
+  $("#co-empty").hidden=!empty||coDone;
+  $("#co-form").hidden=empty;
+  $("#co-items").innerHTML=cart.map(function(c){return '<div class="line"><div>'+c.name+'<small>Qty '+c.q+'</small></div><div>'+eur(c.price*c.q)+'</div></div>'}).join("");
+  $("#co-sub").textContent=eur(sub());
+  $("#co-ship").textContent=ship()?eur(ship()):"Free";
+  $("#co-total").textContent=eur(sub()+ship());
+  $("#pay").textContent="Pay "+eur(sub()+ship());
+}
+/* Plug your payment provider in here. Create the payment on your server with the order,
+   then confirm it with the provider's secure fields. Resolve when paid, reject with an Error if not. */
+function startPayment(order){
+  console.log("Order ready for payment:",order);
+  return Promise.reject(new Error("Payments aren’t connected yet. Add your provider (e.g. Stripe) in startPayment()."));
+}
+$("#co-form").onsubmit=function(e){
+  e.preventDefault();
+  var f=this,btn=$("#pay"),err=$("#co-err");err.textContent="";
+  var d={};new FormData(f).forEach(function(v,k){d[k]=v});
+  var order={customer:d,items:cart.slice(),subtotal:sub(),shipping:ship(),total:sub()+ship()};
+  btn.disabled=true;btn.textContent="Processing…";
+  startPayment(order).then(function(){
+    $("#ref").textContent="FS-"+Math.random().toString(36).slice(2,8).toUpperCase();
+    coDone=true;cart=[];draw();renderCO();scrollTo(0,0);
+  }).catch(function(x){err.textContent=x.message;btn.disabled=false;renderCO()});
+};
+function route(){
+  var co=location.hash=="#checkout",ad=location.hash=="#admin";
+  document.querySelector("main").hidden=co||ad;document.querySelector("footer").hidden=co||ad;
+  $("#checkout-page").hidden=!co;$("#admin-page").hidden=!ad;
+  if(ad){renderAdmin()}
+  else if(co){if(!cart.length)coDone=coDone&&false;renderCO();scrollTo(0,0)}
+  else{coDone=false;var t=document.getElementById(location.hash.slice(1));if(t)t.scrollIntoView()}
+}
+/* ===== Admin (open the site with #admin at the end of the address) =====
+   NOTE: this login only hides the panel in the browser. It is not real security.
+   Default password: FragAdmin#2026  -> change it (Admin > Change admin password). */
+var ADMIN_HASH="656262b80c98100c90e89ef96c95bc0cc6778e352631b42f84c20c8dbe1a6569";
+var ADM=null,OPT={gender:["men","women","unisex"],family:["fresh","woody","sweet","floral"],occasion:["daily","evening","office"],strength:["light","moderate","bold"]};
+function sha(s){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(function(b){return Array.prototype.map.call(new Uint8Array(b),function(x){return("0"+x.toString(16)).slice(-2)}).join("")})}
+function isAdmin(){try{return sessionStorage.getItem("fs_admin")=="1"}catch(e){return false}}
+function msg(t,bad){var m=$("#ad-msg");m.textContent=t;m.className=bad?"err":"ok"}
+function txt(s){return String(s==null?"":s).replace(/[<>"]/g,"").trim()}
+function renderAdmin(){
+  var on=isAdmin();
+  $("#ad-login").hidden=on;$("#ad-panel").hidden=!on;$("#ad-out").hidden=!on;
+  if(on&&!ADM){ADM=JSON.parse(JSON.stringify(PRODUCTS));$("#ad-flat").value=SHIP.flat;$("#ad-free").value=SHIP.freeOver;drawRows()}
+  scrollTo(0,0)}
+function cell(tr,p,k,opts){
+  var td=document.createElement("td"),e;
+  if(opts){e=document.createElement("select");opts.forEach(function(o){var x=document.createElement("option");x.textContent=o;e.appendChild(x)})}
+  else{e=document.createElement("input");if(k=="price"){e.type="number";e.min=1;e.step="0.01"}}
+  e.value=p[k];e.setAttribute("aria-label",k);
+  e.oninput=e.onchange=function(){p[k]=this.value;if(k=="img"){var im=tr.querySelector("img");this.value?im.src=this.value:im.removeAttribute("src")}};
+  td.appendChild(e);tr.appendChild(td)}
+function drawRows(){
+  var q=$("#ad-q").value.trim().toLowerCase(),tb=$("#ad-rows");tb.innerHTML="";
+  ADM.forEach(function(p){
+    if(q&&(p.name+" "+p.brand).toLowerCase().indexOf(q)<0)return;
+    var tr=document.createElement("tr"),td=document.createElement("td"),im=document.createElement("img");
+    im.className="thumb";im.alt="";if(p.img)im.src=p.img;td.appendChild(im);tr.appendChild(td);
+    cell(tr,p,"brand");cell(tr,p,"name");
+    ["gender","family","occasion","strength"].forEach(function(k){cell(tr,p,k,OPT[k])});
+    cell(tr,p,"price");cell(tr,p,"img");
+    td=document.createElement("td");var d=document.createElement("button");d.type="button";d.className="x";d.textContent="Delete";
+    d.onclick=function(){if(confirm("Delete “"+p.name+"”?")){ADM=ADM.filter(function(x){return x!==p});drawRows()}};
+    td.appendChild(d);tr.appendChild(td);tb.appendChild(tr)})}
+function clean(){
+  var out=[];
+  for(var i=0;i<ADM.length;i++){var p=ADM[i],pr=parseFloat(p.price),im=txt(p.img);
+    if(!txt(p.name)||!txt(p.brand)||!(pr>0)){msg("Check “"+(txt(p.name)||"unnamed product")+"”: brand, name and a price above 0 are required.",1);return null}
+    if(/^javascript:/i.test(im))im="";
+    out.push({id:i+1,brand:txt(p.brand),name:txt(p.name),gender:p.gender,family:p.family,occasion:p.occasion,strength:p.strength,price:pr,img:im})}
+  if(!out.length){msg("Add at least one product.",1);return null}
+  return out}
+function shipVals(){var f=parseFloat($("#ad-flat").value),r=parseFloat($("#ad-free").value);
+  if(!(f>=0)||!(r>=0)){msg("Delivery values must be 0 or more.",1);return null}return{flat:f,freeOver:r}}
+$("#ad-login").onsubmit=function(e){e.preventDefault();
+  if(!window.crypto||!crypto.subtle){$("#ad-err").textContent="Open the site over https to use admin login.";return}
+  sha($("#ad-pw").value).then(function(h){
+    if(h===ADMIN_HASH){try{sessionStorage.setItem("fs_admin","1")}catch(x){}$("#ad-pw").value="";$("#ad-err").textContent="";renderAdmin()}
+    else $("#ad-err").textContent="Wrong password."})};
+$("#ad-out").onclick=function(){try{sessionStorage.removeItem("fs_admin")}catch(e){}ADM=null;renderAdmin()};
+$("#ad-q").oninput=function(){drawRows()};
+$("#ad-add").onclick=function(){
+  ADM.unshift({id:0,brand:"Brand",name:"New fragrance",gender:"unisex",family:"fresh",occasion:"daily",strength:"moderate",price:60,img:""});
+  $("#ad-q").value="";drawRows()};
+$("#ad-save").onclick=function(){
+  var o=clean(),s=o&&shipVals();if(!o||!s)return;
+  try{localStorage.setItem("fs_products",JSON.stringify(o));localStorage.setItem("fs_ship",JSON.stringify(s))}
+  catch(e){msg("Couldn’t save in this browser (storage full or blocked). Use “Copy code for the file” instead.",1);return}
+  msg("Saved. Reloading the shop…");location.hash="#shop";setTimeout(function(){location.reload()},400)};
+$("#ad-exp").onclick=function(){var o=clean();if(!o)return;
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(o,null,1)],{type:"application/json"}));a.download="fragselect-products.json";a.click()};
+$("#ad-imp").onchange=function(){var f=this.files[0],inp=this;if(!f)return;var r=new FileReader();
+  r.onload=function(){try{
+    var a=JSON.parse(r.result);if(!Array.isArray(a)||!a.length)throw 0;
+    ADM=a.map(function(p,i){return{id:i+1,brand:txt(p.brand),name:txt(p.name),
+      gender:OPT.gender.indexOf(p.gender)>-1?p.gender:"unisex",family:OPT.family.indexOf(p.family)>-1?p.family:"fresh",
+      occasion:OPT.occasion.indexOf(p.occasion)>-1?p.occasion:"daily",strength:OPT.strength.indexOf(p.strength)>-1?p.strength:"moderate",
+      price:p.price,img:txt(p.img)}});
+    drawRows();msg("Imported "+ADM.length+" products. Press Save changes to apply them.")}
+  catch(e){msg("That file isn’t a valid products file.",1)}inp.value=""};
+  r.readAsText(f)};
+$("#ad-copy").onclick=function(){var o=clean();if(!o)return;
+  var t="var PRODUCTS="+JSON.stringify(o).replace(/\},\{/g,"},\n{")+";",ta=$("#ad-code");
+  ta.hidden=false;ta.value=t;ta.select();
+  try{document.execCommand("copy");msg("Code copied. In the HTML file, replace the whole var PRODUCTS=[…]; block with it, then upload the file to your hosting.")}
+  catch(e){msg("Select and copy the code below, then paste it over the var PRODUCTS=[…]; block in the HTML file.")}};
+$("#ad-reset").onclick=function(){if(confirm("Remove all admin changes saved in this browser and go back to the list in the HTML file?")){
+  try{localStorage.removeItem("fs_products");localStorage.removeItem("fs_ship")}catch(e){}ADM=null;location.hash="#shop";location.reload()}};
+$("#ad-hash").onclick=function(){var v=$("#ad-newpw").value;
+  if(v.length<8){msg("Use at least 8 characters.",1);return}
+  if(!window.crypto||!crypto.subtle){msg("Open the site over https to generate a password hash.",1);return}
+  sha(v).then(function(h){$("#ad-hashout").textContent=h;msg("Paste this hash as the value of ADMIN_HASH in the HTML file.")})};
+try{cart=JSON.parse(sessionStorage.getItem("fs_cart")||"[]")}catch(e){}
+draw();route();addEventListener("hashchange",route);
+</script>
+</body>
+</html>
